@@ -25,15 +25,15 @@ Window {
             fileDialog.close()
         }
         Component.onCompleted: visible = false
-        nameFilters: [ "audio files (*.mp3)" ]
+        nameFilters: [ "audio files (*.mp3)", "video files (*.mkv *.mp4 *.mov)" ]
     }
 
     Row {
         id: row
         anchors.left:parent.left
         anchors.leftMargin: 30
-        anchors.top:parent.top
-        anchors.topMargin: 200
+        anchors.top:videoOutput.bottom
+        anchors.topMargin: 20
         RoundButton{
             id:btnSelectFile
             height:40
@@ -82,10 +82,14 @@ Window {
 
     Text{
         id: tvSelectedFile
+        width:parent.width
         anchors.top:row.bottom
         anchors.topMargin: 60
         anchors.left: parent.left
         anchors.leftMargin: 30
+        anchors.right: parent.right
+        anchors.rightMargin: 30
+        wrapMode: Text.WordWrap
         text: {
             let selectedFile = fileDialog.selectedFile+""
             let fileName = selectedFile.substring(selectedFile.lastIndexOf("/")+1)
@@ -128,5 +132,16 @@ Window {
     MediaPlayer {
         id: player
         audioOutput: AudioOutput{}
+        videoOutput: videoOutput
+    }
+
+    VideoOutput {
+        id: videoOutput
+        anchors.top: parent.top
+        height:300
+        width:500
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        anchors.topMargin:20
     }
 }
