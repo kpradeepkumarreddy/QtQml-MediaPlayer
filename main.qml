@@ -4,9 +4,9 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtMultimedia
 
-Window {
-    width: 600
-    height: 500
+ApplicationWindow {
+    width: Screen.width
+    height: Screen.height
     visible: true
     title: qsTr("Media Player")
     color: "#AF8EFF"
@@ -30,13 +30,14 @@ Window {
 
     Row {
         id: row
+        height:40
         anchors.left:parent.left
         anchors.leftMargin: 30
-        anchors.top:videoOutput.bottom
-        anchors.topMargin: 20
+        anchors.bottom:tvSelectedFile.top
+        anchors.bottomMargin: 30
         RoundButton{
             id:btnSelectFile
-            height:40
+            height:parent.height
             width:100
             radius:10
             background: Rectangle{
@@ -54,7 +55,7 @@ Window {
         }
         RoundButton {
             id:btnPlay
-            height:40
+            height:parent.height
             width:100
             radius:10
             background: Rectangle{
@@ -83,8 +84,8 @@ Window {
     Text{
         id: tvSelectedFile
         width:parent.width
-        anchors.top:row.bottom
-        anchors.topMargin: 60
+        anchors.bottom:progressSlider.top
+        anchors.bottomMargin: 30
         anchors.left: parent.left
         anchors.leftMargin: 30
         anchors.right: parent.right
@@ -106,10 +107,10 @@ Window {
         width: parent.width
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.topMargin: 25
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
         anchors.leftMargin: 30
         anchors.rightMargin: 30
-        anchors.top: tvSelectedFile.bottom
         enabled: player.seekable
         value: player.duration > 0 ? player.position / player.duration : 0
         background: Rectangle {
@@ -137,11 +138,11 @@ Window {
 
     VideoOutput {
         id: videoOutput
+        width:parent.width
         anchors.top: parent.top
-        height:300
-        width:500
-        anchors.left: parent.left
-        anchors.leftMargin: 30
+        anchors.bottom: row.top
+        anchors.bottomMargin: 60
         anchors.topMargin:20
+        fillMode: VideoOutput.PreserveAspectFit
     }
 }
